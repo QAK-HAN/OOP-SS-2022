@@ -6,6 +6,7 @@ public class Notenauswertung {
     public static void main(String[] args) throws FileNotFoundException {
         int[][] hauptArray = new int[100][2];
         keinPlan(hauptArray);
+        lel(hauptArray);
 
         }
 
