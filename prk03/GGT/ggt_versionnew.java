@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class ggt_versionnew {
-    public static void khans(String[] banana) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean ag = true;
         while (ag) {
