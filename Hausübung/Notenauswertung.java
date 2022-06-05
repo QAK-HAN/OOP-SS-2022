@@ -4,10 +4,10 @@ import java.util.Scanner;
 public class Notenauswertung {
 
     public static void main(String[] args) throws FileNotFoundException {
-        int zähler;
-        zähler = zählen();
+        int zähler = zählen();
         int[][] hauptArray = new int[zähler][2];
         hauptArray = csvAuslesung(hauptArray);
+        notenspiegelRechner(hauptArray);
 
     }
 
@@ -51,10 +51,34 @@ public class Notenauswertung {
         return doppelFuge;
     }
 
-    public static void notenspiegel (){
-        int [] noten = new 
+    public static void notenspiegelRechner(int[][] noten) {
+        int[] notenspiegel = new int[5];
+        for (int i = 0; i < notenspiegel.length; i++) {
+            notenspiegel[i] = 0;
+        }
 
-        
+        int punkte = 88;
+
+
+        if (punkte > 87) {
+            notenspiegel[0] = 1;
+
+        } else if (punkte > 72) {
+            notenspiegel[1] = 2;
+        }
+
+        else if (punkte > 57) {
+            notenspiegel[2] = 3;
+        }
+        else if (punkte > 49) {
+            notenspiegel[3] = 4;
+        }
+        else if (punkte > 0) {
+            notenspiegel[4] = 5;
+        }
+
+        System.out.println(notenspiegel);
+
     }
 
 }
