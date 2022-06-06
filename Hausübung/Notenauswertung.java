@@ -11,6 +11,8 @@ public class Notenauswertung {
         for (int i = 0; i < notenKatastrophe.length;i++){
             System.out.println(notenKatastrophe[i]);
         }
+        System.out.println(bestNote(hauptArray));
+        ausgabeHtml();
 
     }
 
@@ -21,7 +23,6 @@ public class Notenauswertung {
 
         int h = 0;
         while (sc.hasNext()) {
-             
             sc.nextLine();
 
             h++;
@@ -31,28 +32,33 @@ public class Notenauswertung {
 
     }
 
-    public static int[][] csvAuslesung(int doppelFuge[][]) throws FileNotFoundException {
+    public static int[][] csvAuslesung(int csvArray[][]) throws FileNotFoundException {
 
         File getCSVFiles = new File("Notenliste.csv");
         Scanner sc = new Scanner(getCSVFiles);
 
-        
-       for (int i = 0; i < doppelFuge.length; i++){
-           if (i == 0)continue;
-        String wischmopp = sc.nextLine();
-        String[] mrPropper = wischmopp.split(",");
+       
+        int h = -1;
+        while (sc.hasNext()) {
 
-        int fugeEins = Integer.parseInt(mrPropper[0]);
-        int fugeZwei = Integer.parseInt(mrPropper[1]);
+            String zwischwenVariable = sc.nextLine();
+            String[] zwischenArray = zwischwenVariable.split(",");
+            if (h == -1){
+                h++;
+                continue;
+            }
 
-        doppelFuge[i][0] = fugeEins;
-        doppelFuge[i][1] = fugeZwei;
+            int fugeEins = Integer.parseInt(zwischenArray[0]);
+            int fugeZwei = Integer.parseInt(zwischenArray[1]);
 
-       }
-        
- 
+            csvArray[h][0] = fugeEins;
+            csvArray[h][1] = fugeZwei;
+
+            h++;
+
+        }
         sc.close();
-        return doppelFuge;
+        return csvArray;
     }
 
     public static int[] notenspiegelRechner(int[][] noten) {
@@ -77,6 +83,48 @@ public class Notenauswertung {
 
         }
         return notenspiegel;
-
     }
+    public static int bestNote(int [][] bestNoteArray) {
+        int bestNote1 = 0;
+        for (int i = 0; i < bestNoteArray.length; i++) {
+            if (bestNote1 <= bestNoteArray[i][1]) {
+                bestNote1 = bestNoteArray[i][1];
+            }
+        }
+        return bestNote1;
+    }
+
+    public static void ausgabeHtml (){
+        sysout.println("
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<svg 
+height="10000" width="10000">
+
+<rect x="90" y="35" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
+/>
+
+<rect x="90" y="70" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
+/>
+
+<rect x="90" y="105" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
+/>
+
+<rect x="90" y="140" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
+/>
+
+<rect x="90" y="175" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
+/>
+  
+</svg> 
+ 
+</body>
+</html>
+
+")
+    }
+    
 }
