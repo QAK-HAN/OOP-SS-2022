@@ -21,6 +21,7 @@ public class Notenauswertung {
 
         int h = 0;
         while (sc.hasNext()) {
+             
             sc.nextLine();
 
             h++;
@@ -36,21 +37,20 @@ public class Notenauswertung {
         Scanner sc = new Scanner(getCSVFiles);
 
         
-       
-        int h = 0;
-        while (sc.hasNext()) {
-            String wischmopp = sc.nextLine();
-            String[] mrPropper = wischmopp.split(",");
+       for (int i = 0; i < doppelFuge.length; i++){
+           if (i == 0)continue;
+        String wischmopp = sc.nextLine();
+        String[] mrPropper = wischmopp.split(",");
 
-            int fugeEins = Integer.parseInt(mrPropper[0]);
-            int fugeZwei = Integer.parseInt(mrPropper[1]);
+        int fugeEins = Integer.parseInt(mrPropper[0]);
+        int fugeZwei = Integer.parseInt(mrPropper[1]);
 
-            doppelFuge[h][0] = fugeEins;
-            doppelFuge[h][1] = fugeZwei;
+        doppelFuge[i][0] = fugeEins;
+        doppelFuge[i][1] = fugeZwei;
 
-            h++;
-
-        }
+       }
+        
+ 
         sc.close();
         return doppelFuge;
     }
