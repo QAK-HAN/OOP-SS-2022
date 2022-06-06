@@ -1,38 +1,37 @@
-import java.io.*;
-import java.util.Scanner;
+import java.io.*; // Methode import um auf die Datai zugreifen zu könnnen.
+import java.util.Scanner;  // Methode import um auf um den scanner benutzen zu könnnen.
 
 public class Notenauswertung {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        int zähler = zählen();
-        int[][] hauptArray = new int[zähler][2];
-        hauptArray = csvAuslesung(hauptArray);
-        int[] notenKatastrophe = notenspiegelRechner(hauptArray);
-        for (int i = 0; i < notenKatastrophe.length;i++){
+    public static void main(String[] args) throws IOException {
+        int arrayGroesse = zeihlenZaehlen(); // Hier habe ich eine Variable initialisiert die aus der Methode zeilenzählen kommt. (genauere infos stehen bei der Methode)
+        int[][] hauptArray = new int[arrayGroesse][2]; // hier ist mein Haut Array das eine Abhängige zeilengroesse hat
+        hauptArray = csvAuslesung(hauptArray); // hier wird mein Haupt Array von dem csvArray aus der der csvAuslesung Methode überschrieben bzw. inizialisiert.
+        int[] notenKatastrophe = notenspiegelRechner(hauptArray); //hier habe ich ein Neues Array erstellt und es mit dem Array aus der Methode noten kontkatastrophe überschrieben.
+        for (int i = 0; i < notenKatastrophe.length;i++){ 
             System.out.println(notenKatastrophe[i]);
         }
-        System.out.println(bestNote(hauptArray));
-        ausgabeHtml();
+        int htmlBesteNote = bestNote(hauptArray);
+        ausgabeHtml(notenKatastrophe, htmlBesteNote);
+        
 
     }
 
-    public static int zählen() throws FileNotFoundException {
+    public static int zeihlenZaehlen() throws FileNotFoundException { // hier habe. ich eine Methode um die anzahl der zeilen aus der csv datai zu zählen.
 
-        File getCSVFiles = new File("Notenliste.csv");
-        Scanner sc = new Scanner(getCSVFiles);
+        File getCSVFiles = new File("Notenliste.csv"); // hier wird auf die datai zugegriffen. der genaue pfad wurde bei mir nicht benötigt, da meine datai im selben ordner ist.
+        Scanner sc = new Scanner(getCSVFiles);// hier wird mithilfe des Scanners die daten der Csv herausgelesen bzw. das herauslesen wird ermöglicht.
 
-        int h = 0;
-        while (sc.hasNext()) {
-            sc.nextLine();
-
-            h++;
+        int h = 0; //Dies ist eien Variable die ich als counter menutzten möchte damit ich die Array länge nicht immert geändert werden muss.
+        while (sc.hasNext()) { // Hier habe ich eine while schleife die solange diie methode dursc##chführt bis es keine neue zeile mehr gibt.
+            sc.nextLine(); // sc.next.Line verlangt dann auch nach der neuen zeile die sc.hasNext mir aussucht. Das ist wichtig damit die Methode auch aufhört.
+            h++;// variable wird addiert. (counter)
         }
-        sc.close();
-        return h;
-
+        sc.close(); // damit es schöner aussieht. (benutzten die Variable sc nicht wirklich)
+        return h; // returnt nur den Counter.
     }
 
-    public static int[][] csvAuslesung(int csvArray[][]) throws FileNotFoundException {
+    public static int[][] csvAuslesung(int csvArray[][]) throws FileNotFoundException {// liest die csv dataien und packt sie in einem array.
 
         File getCSVFiles = new File("Notenliste.csv");
         Scanner sc = new Scanner(getCSVFiles);
@@ -94,37 +93,50 @@ public class Notenauswertung {
         return bestNote1;
     }
 
-    public static void ausgabeHtml (){
-        sysout.println("
+    public static void ausgabeHtml (int[] htmlPunkte, int bestePunkte) throws IOException
+    { 
+       File htmlFile = new File("htmlDatai.html");
+       BufferedWriter writer = new BufferedWriter(new FileWriter(htmlFile));
+       writer.write("<!DOCTYPE html> "+"\n" +
+       "<html> "+"\n" +
+       "<body>"+"\n" +
+       
+       "<svg height=\"10000\" width=\"10000\">"+"\n" +
+       
+       "<rect x=\"90\" y=\"35\" width=" + htmlPunkte[0]*10 + " height=\"20\" rx=\"3\" ry=\"3\" fill=\"#2A7BB4\" />"+"\n" +
 
-<!DOCTYPE html>
-<html>
-<body>
+       "<text x=\"10\" y=\"50\" font-size=\"12\" font-family=\"Arial\" fill=\"#404040\">Note 1: "+htmlPunkte[0]+" </text>"+"\n" +
+       
+       
+       "<rect x=\"90\" y=\"70\" width=" + htmlPunkte[1]*10 + " height=\"20\" rx=\"3\" ry=\"3\" fill=\"#2A7BB4\" />"+"\n" +
+       
+       "<text x=\"10\" y=\"85\" font-size=\"12\" font-family=\"Arial\" fill=\"#404040\">Note 2: "+htmlPunkte[1]+" </text>"+"\n" +
+       
+       
+       "<rect x=\"90\" y=\"105\" width=" + htmlPunkte[2]*10 + " height=\"20\" rx=\"3\" ry=\"3\" fill=\"#2A7BB4\" />"+"\n" +
+       
+       "<text x=\"10\" y=\"120\" font-size=\"12\" font-family=\"Arial\" fill=\"#404040\">Note 3: "+htmlPunkte[2]+" </text>"+"\n" +
+       
+       
+       "<rect x=\"90\" y=\"140\" width=" + htmlPunkte[3]*10 + " height=\"20\" rx=\"3\" ry=\"3\" fill=\"#2A7BB4\" />"+"\n" +
+       
+       "<text x=\"10\" y=\"155\" font-size=\"12\" font-family=\"Arial\" fill=\"#404040\">Note 4: "+htmlPunkte[3]+" </text>"+"\n" +
+       
+       
+       "<rect x=\"90\" y=\"175\" width=" + htmlPunkte[4]*10 + " height=\"20\" rx=\"3\" ry=\"3\" fill=\"#2A7BB4\" />"+"\n" +
+       
+       "<text x=\"10\" y=\"190\" font-size=\"12\" font-family=\"Arial\" fill=\"#404040\">Note 5: "+htmlPunkte[4]+" </text>"+"\n" +
+       
+       
+       "<text x=\"10\" y=\"250\" font-size=\"12\" font-family=\"Arial\" fill=\"#404040\">Die beste Punktzahl ist " + bestePunkte +" .</text>"+"\n" +
+         
+       "</svg> "+"\n" +
+        
+       "</body>"+"\n" +
+       "</html>"+"\n");
+       writer.close();
 
-<svg 
-height="10000" width="10000">
-
-<rect x="90" y="35" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
-/>
-
-<rect x="90" y="70" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
-/>
-
-<rect x="90" y="105" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
-/>
-
-<rect x="90" y="140" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
-/>
-
-<rect x="90" y="175" width="200" height="20" rx="3" ry="3" fill="#2A7BB4" 
-/>
-  
-</svg> 
- 
-</body>
-</html>
-
-")
     }
     
 }
+
