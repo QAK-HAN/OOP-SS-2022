@@ -7,7 +7,10 @@ public class Notenauswertung {
         int zähler = zählen();
         int[][] hauptArray = new int[zähler][2];
         hauptArray = csvAuslesung(hauptArray);
-        notenspiegelRechner(hauptArray);
+        int[] notenKatastrophe = notenspiegelRechner(hauptArray);
+        for (int i = 0; i < notenKatastrophe.length;i++){
+            System.out.println(notenKatastrophe[i]);
+        }
 
     }
 
@@ -32,9 +35,10 @@ public class Notenauswertung {
         File getCSVFiles = new File("Notenliste.csv");
         Scanner sc = new Scanner(getCSVFiles);
 
+        
+       
         int h = 0;
         while (sc.hasNext()) {
-
             String wischmopp = sc.nextLine();
             String[] mrPropper = wischmopp.split(",");
 
@@ -51,34 +55,28 @@ public class Notenauswertung {
         return doppelFuge;
     }
 
-    public static void notenspiegelRechner(int[][] noten) {
+    public static int[] notenspiegelRechner(int[][] noten) {
         int[] notenspiegel = new int[5];
-        for (int i = 0; i < notenspiegel.length; i++) {
-            notenspiegel[i] = 0;
+        for (int i = 0; i < noten.length; i++) {
+
+            if (noten[i][1] > 87) {
+
+                notenspiegel[0] += 1;
+            } else if (noten[i][1] > 72) {
+
+                notenspiegel[1] += 1;
+            } else if (noten[i][1] > 57) {
+
+                notenspiegel[2] += 1;
+            } else if (noten[i][1] > 49) {
+
+                notenspiegel[3] += 1;
+            } else {
+                notenspiegel[4] += 1;
+            }
+
         }
-
-        int punkte = 88;
-
-
-        if (punkte > 87) {
-            notenspiegel[0] = 1;
-
-        } else if (punkte > 72) {
-            notenspiegel[1] = 2;
-        }
-
-        else if (punkte > 57) {
-            notenspiegel[2] = 3;
-        }
-        else if (punkte > 49) {
-            notenspiegel[3] = 4;
-        }
-        else if (punkte > 0) {
-            notenspiegel[4] = 5;
-        }
-
-        System.out.println(notenspiegel);
+        return notenspiegel;
 
     }
-
 }
